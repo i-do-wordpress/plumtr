@@ -7,6 +7,7 @@ var logged = 'no';
 }
   if(window.location.href.indexOf('?go=yes') !== -1){
     logged = 'yes';
+    localStorage.setItem('go','yes');
     console.log(logged);
   }
   
