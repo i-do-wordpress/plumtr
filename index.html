@@ -1,6 +1,6 @@
 <script>
 
-  console.log(decodeURIComponent(window.location.search));
+  console.log(decodeURIComponent(window.location.search).split('&'));
   var logged = 'no';
   
   if(localStorage.getItem('go')==='yes'){
