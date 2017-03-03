@@ -2,7 +2,7 @@
 
   if(decodeURIComponent(window.location.search).split('&').length){
   
-    var arr = (decodeURIComponent(window.location.search).split('&').length);
+    var arr = (decodeURIComponent(window.location.search).split('&'));
     localStorage.arr = arr;
     //set use in html on page append or 
     //set variables by for lop
@@ -11,7 +11,7 @@
     //then
     
     //redirect again home page and if logged it goes to dashboard and url is clear
-    window.location.href = 'https://i-do-wordpress.github.io/plumtr/';
+    //window.location.href = 'https://i-do-wordpress.github.io/plumtr/';
   }
   
   
