@@ -1,6 +1,6 @@
 <script>
 
-  console.log(window.location.search);
+  console.log(decodeURIComponent(window.location.search));
   var logged = 'no';
   
   if(localStorage.getItem('go')==='yes'){
