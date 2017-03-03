@@ -1,6 +1,21 @@
 <script>
 
-  console.log(decodeURIComponent(window.location.search).split('&'));
+  if(decodeURIComponent(window.location.search).split('&').length){
+  
+    var arr = if(decodeURIComponent(window.location.search).split('&').length);
+    localStorage.arr = arr;
+    //set use in html on page append or 
+    //set variables by for lop
+    //or set localStorage
+    
+    //then
+    
+    //redirect again home page and if logged it goes to dashboard and url is clear
+    window.location.href = 'https://i-do-wordpress.github.io/plumtr/';
+  }
+  
+  
+  
   var logged = 'no';
   
   if(localStorage.getItem('go')==='yes'){
