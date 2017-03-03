@@ -8,14 +8,21 @@ var logged = 'no';
   if(window.location.href.indexOf('?go=yes') !== -1){
     logged = 'yes';
     localStorage.setItem('go','yes');
+    localStorage.name = 'My Name';
+    
+    localStorage['nums'] = 1234;
     console.log(logged);
   }
   
-  
+  function logout(){
+    localStorage.setItem('go','no');
+    localStorage.removeItem('go');
+    localStorage.clear(); //all
+  }
 
 </script>
 
-
+<h1><a  href="javascript:void(0)" onclick="logout();">logout</a></h1>
 
 <a href="http://useless-space.hol.es/plumtr.php">plumtr</a>
 
