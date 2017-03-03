@@ -5,7 +5,7 @@ var logged = 'no';
   logged = 'yes';
     console.log(logged);
 }
-  if(window.location.href indexOf '?go=yes' !== -1){
+  if(window.location.href.indexOf('?go=yes') !== -1){
     logged = 'yes';
     console.log(logged);
   }
