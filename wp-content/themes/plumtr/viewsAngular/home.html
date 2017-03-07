@@ -1,0 +1,21 @@
+
+<div class="row">
+  <div class="col-xs-12 col-sm-offset-1 col-sm-10">
+    <ul class="list-unstyled">
+      <li ng-repeat="post in CR.posts track by $index" class="box">
+        
+        <div ng-if="$even" class="col-xs-12 col-sm-4 col-sm-offset-1 well clearfix _well">
+          <h5>{{post.title.rendered}} {{$index}}</h5>
+        </div>  
+        
+        <div ng-if="$odd" class="col-xs-12 col-sm-4 col-sm-offset-2 well clearfix _well">
+          <h5>{{post.title.rendered}} {{$index}}</h5>
+        </div>
+        
+        
+      </li>
+    </ul>  
+  </div>
+</div>
+
+
