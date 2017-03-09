@@ -4,13 +4,55 @@
     <ul class="list-unstyled">
       <li ng-repeat="post in CR.posts track by $index" class="box">
         
-        <div ng-if="$even" class="col-xs-12 col-sm-4 col-sm-offset-1 well clearfix _well">
-          <h5>{{post.title.rendered}} {{$index}}</h5>
+        <div ng-if="$even" class="col-sm-12 col-md-4 col-md-offset-1 well clearfix _well">
+          <div class="media">
+            <div class="media-left media-middle">
+              <a href="{{post.thumb100x100Url}}">
+                <img class="media-object" ng-src="{{post.thumb100x100Url}}" alt="yo">
+              </a>
+            </div>
+            <div class="media-body">
+              <h5 class="media-heading">{{post.title.rendered}} {{$index}}</h5>
+            </div>
+          </div>
+        </div>  
+        <div ng-if="$odd" class="col-sm-12 col-md-4 col-md-offset-2 well clearfix _well">
+          <div class="media">
+            <div class="media-left media-middle">
+              <a href="{{post.thumbMediumUrl}}">
+                <img class="media-object" ng-src="{{post.thumb100x100Url}}" alt="yo">
+              </a>
+            </div>
+            <div class="media-body">
+              <h5 class="media-heading">{{post.title.rendered}} {{$index}}</h5>
+            </div>
+          </div>
         </div>  
         
-        <div ng-if="$odd" class="col-xs-12 col-sm-4 col-sm-offset-2 well clearfix _well">
-          <h5>{{post.title.rendered}} {{$index}}</h5>
+        
+        
+        
+        
+        
+        
+        <!--
+          
+        <div ng-if="$odd" class="col-xs-12 col-sm-4 col-sm-offset-2">
+        <div class="well clearfix _well">  
+          <div class="media">
+            <div class="media-left media-middle">
+              <a href="{{post.thumb100x100Url}}">
+                <img class="media-object" ng-src="{{post.thumb100x100Url}}" alt="yo">
+              </a>
+            </div>
+            <div class="media-body">
+              <h5 class="media-heading">{{post.title.rendered}} {{$index}}</h5>
+            </div>
+          </div>
         </div>
+        </div>
+        
+        -->        
         
         
       </li>

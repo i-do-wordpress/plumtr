@@ -5,6 +5,10 @@ add_action('after_setup_theme', 'plumtrAddPostFormatsAndFeaturedImages');
 
 //add_action('init', 'plumtrCPT');
 
+add_filter('rest_prepare_post', 'plumtrCustomizeRestResponse', 10, 3);
+
+
+
 if(!function_exists('plumtrAddScripts')){
   function PlumtrAddScripts(){
     //styles
@@ -31,11 +35,13 @@ if(!function_exists('plumtrAddScripts')){
 
 if(!function_exists('plumtrAddPostFormatsAndFeaturedImages')){
   function plumtrAddPostFormatsAndFeaturedImages(){
-    
+  
     add_theme_support('post-thumbnails');  
     add_theme_support('post-formats', array('aside', 'link', 'gallery', 'status', 'quote', 'image' )); 
     
     add_image_size('plumtr-thumb', 200, 200, true); //true crop
+    add_image_size('300x180', 300, 180, true); //true crop
+    add_image_size('100x100', 100, 100, true); //true crop
   }
 }
 
@@ -44,6 +50,34 @@ function plumtrCPT(){
   register_post_type();
 }
 */
+
+
+//adding extra fields to make one api request
+//initially /posts request returned only image id
+//and second api call needed
+if(!function_exists('plumtrCustomizeRestResponse')){
+  function plumtrCustomizeRestResponse($data, $post, $request){
+  	
+  	$thumbId = get_post_thumbnail_id( $post->ID );
+	  
+	  $thumb100x100Url = wp_get_attachment_image_src( $thumbId, '100x100' );
+	  $thumb300x180Url = wp_get_attachment_image_src( $thumbId, '300x180' );
+	  $thumbMediumUrl = wp_get_attachment_image_src( $thumbId, 'medium' );
+	  
+	  $_data = $data->data;
+	  $_data['thumb100x100Url'] = $thumb100x100Url[0];
+	  $_data['thumb300x180Url'] = $thumb300x180Url[0];
+	  $_data['thumbMediumUrl'] = $thumbMediumUrl[0];
+	  $data->data = $_data;
+  	return $data;
+
+  }
+}
+ 
+
+
+
+
 
 
 
