@@ -64,10 +64,20 @@ if(!function_exists('plumtrCustomizeRestResponse')){
 	  $thumb300x180Url = wp_get_attachment_image_src( $thumbId, '300x180' );
 	  $thumbMediumUrl = wp_get_attachment_image_src( $thumbId, 'medium' );
 	  
+	  $postCats = get_the_category($post->id);
+	  
+	  
 	  $_data = $data->data;
+	  
 	  $_data['thumb100x100Url'] = $thumb100x100Url[0];
 	  $_data['thumb300x180Url'] = $thumb300x180Url[0];
 	  $_data['thumbMediumUrl'] = $thumbMediumUrl[0];
+	  
+	  //in rest wp json there is already 'categories' = [1,2,3] property which holds [] of cat ids
+	  //to not doing another ajax based on ids we get cats names here:
+	  $_data['cats'] = $postCats;
+	  
+	  
 	  $data->data = $_data;
   	return $data;
 

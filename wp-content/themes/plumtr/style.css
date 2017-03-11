@@ -22,4 +22,18 @@ body{
 }
 
 
+small.cat-label{
+  margin: 0;
+  margin-right: 5px;
+  margin-top: 5px;
+  padding: 3px;
+  display: inline-block;
+  background: #1abc9c;
+  color: #eee;
+  
+}
+
+
+
+
 

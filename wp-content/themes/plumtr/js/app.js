@@ -1,7 +1,7 @@
 ;(function(){
   
   
-  /*global angular, baseThemeUrl, baseRest, $*/  
+  /*global angular, baseThemeUrl, baseRest*/  
   var p = angular.module('plumtr', ['ngRoute']);  
   
   /////////////////////////////////////////
@@ -62,26 +62,24 @@
         return len;
       },
       function(newVal, oldVal){
-        var len = newVal;
         var wells = angular.element(document).find('._well');
-        var makeEven = 0;
-        //wells.matchHeight();
-        
         angular.element(document).find('img.thumb100').load(
           function(){
-            for(var i = 0; i<len; i++){
-              makeEven = makeEven < wells[i].offsetHeight ? wells[i].offsetHeight : makeEven;
-            }
-            //console.log(makeEven);
-            for(var i = 0; i<len; i++){
-              $(wells[i]).outerHeight(makeEven);
-              //$(wells[i]).attr('min-height', '120px');
-              //$rootScope.$apply();
-            }
+            wells.matchHeight();  
           }  
         );
       }
     ); //end watch
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    
     
     
     
