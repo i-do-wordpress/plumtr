@@ -58,6 +58,7 @@ function plumtrCPT(){
 if(!function_exists('plumtrCustomizeRestResponse')){
   function plumtrCustomizeRestResponse($data, $post, $request){
   	
+  	//get form $post
   	$thumbId = get_post_thumbnail_id( $post->ID );
 	  
 	  $thumb100x100Url = wp_get_attachment_image_src( $thumbId, '100x100' );
@@ -67,6 +68,8 @@ if(!function_exists('plumtrCustomizeRestResponse')){
 	  $postCats = get_the_category($post->id);
 	  
 	  
+	  
+	  //add to json
 	  $_data = $data->data;
 	  
 	  $_data['thumb100x100Url'] = $thumb100x100Url[0];
