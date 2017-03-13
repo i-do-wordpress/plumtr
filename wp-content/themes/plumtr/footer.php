@@ -14,7 +14,15 @@
     
     
   <script src="<?php bloginfo('template_url'); ?>/js/app.js"></script>
-    
+  
+  <?php
+  /* called in functions
+  <script src="<?php bloginfo('template_url'); ?>/js/js.js"></script>
+  */
+  ?>  
+  
+  
+  
     
   <?php wp_footer(); ?>
     

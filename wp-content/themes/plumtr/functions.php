@@ -10,7 +10,7 @@ add_filter('rest_prepare_post', 'plumtrCustomizeRestResponse', 10, 3);
 
 
 if(!function_exists('plumtrAddScripts')){
-  function PlumtrAddScripts(){
+  function plumtrAddScripts(){
     //styles
     wp_enqueue_style( 'style', get_stylesheet_uri());
     
@@ -58,6 +58,11 @@ function plumtrCPT(){
 if(!function_exists('plumtrCustomizeRestResponse')){
   function plumtrCustomizeRestResponse($data, $post, $request){
   	
+  	//get all wordpress cats for all posts
+  	$allWpCats = get_categories();
+  	
+  	
+  	
   	//get form $post
   	$thumbId = get_post_thumbnail_id( $post->ID );
 	  
@@ -79,6 +84,8 @@ if(!function_exists('plumtrCustomizeRestResponse')){
 	  //in rest wp json there is already 'categories' = [1,2,3] property which holds [] of cat ids
 	  //to not doing another ajax based on ids we get cats names here:
 	  $_data['cats'] = $postCats;
+	  
+	  $_data['allWpCats'] = $allWpCats;
 	  
 	  
 	  $data->data = $_data;

@@ -1,0 +1,74 @@
+
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+    <div class="col-sm-12 col-md-10 col-md-offset-1">    
+      
+      
+      <label class="checkbox-inline"><strong>Categories&nbsp;&nbsp;&nbsp;</strong></label>
+      
+      <!--
+      
+      <label class="checkbox-inline">
+        <input type="checkbox" ng-model="CR.allFilter.checked" ng-change="CR.toggleAll()">All
+      </label>&nbsp;&nbsp;&nbsp;
+      
+      <label ng-repeat="cat in CR.cats" class="checkbox-inline cat-filter-checkbox"><input type="checkbox" ng-true-value="{{cat.id}}" ng-false-value="0" ng-model="CR.filterByCat_Id.categories">{{cat.name}}</label>
+      
+      -->
+      
+      <label class="radio-inline" ng-class="{'activeRadio':CR.filterByCat_Id.categories===''}">
+        <input type="radio" value="" ng-model="CR.filterByCat_Id.categories" name="radioCats" ng-change="CR.activeRadio(CR.filterByCat_Id.categories)" >All
+      </label>
+      <!--no need on click, change pass node, add class, remove class
+      do straight away by ng-class
+      -->
+      <label ng-repeat="cat in CR.cats" class="radio-inline" ng-class="{'activeRadio':CR.filterByCat_Id.categories==cat.id}">
+        <input type="radio" value="{{cat.id}}" ng-model="CR.filterByCat_Id.categories" name="radioCats" ng-change="CR.activeRadio(CR.filterByCat_Id.categories)" >{{cat.name}}
+      </label>
+      
+      
+      <br>
+      <!--filter 1 : {{CR.filterByCat_Id}}-->
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <!--ng repeat? 1 model-->
+      
+      <!--
+      <label class="checkbox-inline"><strong>Categories&nbsp;&nbsp;&nbsp;</strong></label>
+      <label class="checkbox-inline"><input type="checkbox" value="" checked>All</label>
+      &nbsp;&nbsp;&nbsp;
+      <label class="checkbox-inline"><input type="checkbox" value="4" ng-model="CR.catFilter.categories"> filter1</label>
+      &nbsp;&nbsp;&nbsp;
+      <label class="checkbox-inline"><input type="checkbox" value="{{CR.postsCats.id}}" ng-model="CR.postsCats[$index].active" data-cat="CR.postCats.id" ng-change="CR.displayCat()">{{CR.postsCats.name}}ng repeat</label>
+      &nbsp;&nbsp;&nbsp;
+      <label class="checkbox-inline"><input type="checkbox" value="">Option 3</label>
+      
+      <br>
+      <br>
+      <label ng-repeat="cat in CR._activeCats" class="checkbox-inline"><input type="checkbox" value="{{cat.active}}" ng-model="cat.id" data-cat-id="{{cat.id}}">{{cat.name}}</label>
+      <label ng-repeat="cat in CR._activeCats" class="checkbox-inline"><input type="checkbox" value="{{cat.active}}" ng-model="cat.active" data-cat-id="{{cat.id}}" ng-change="CR.displayCat(cat)">{{cat.name}}</label>
+      
+      -->
+      
+      <!--input type="checkbox" ng-model="CR.caat" ng-true-value="CR.caat.id" ng-false-value=""-->
+      <!--if CR.caat-->
+      
+    </div>  
+  </div>  
+</div>
+<br>
+<!--
+cat filter: {{CR.catFilter}}
+post cats: {{CR.postsCats}}
+-->

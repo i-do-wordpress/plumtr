@@ -13,9 +13,18 @@
       orderBy:'-title.rendered'
       
       -->      
+      <!-- ng-repeat="
+        post in CR.posts|
+        filter:CR.searchTitleContent|
+        filter:CR.filterByCatId|
+        orderBy:'title.rendered'|
+        limitTo:50 track by $index"
+      -->
+      
       <li ng-repeat="
         post in CR.posts|
         filter:CR.searchTitleContent|
+        filter:CR.filterByCat_Id|
         orderBy:'title.rendered'|
         limitTo:50 track by $index"
       >

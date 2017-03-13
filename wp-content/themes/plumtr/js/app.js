@@ -1,7 +1,7 @@
 ;(function(){
   
   
-  /*global angular, baseThemeUrl, baseRest*/  
+  /*global angular, baseThemeUrl, baseRest $*/  
   var p = angular.module('plumtr', ['ngRoute']);  
   
   /////////////////////////////////////////
@@ -43,6 +43,7 @@
   function CtrlRoot($http, $scope, $rootScope){
     var self = this;
     self.posts = [];
+    self.cats = [];
     
     self.data = {};
     self.data.search = '';
@@ -50,6 +51,30 @@
     self.search = '';
     self.searchObj = {};
     self.searchTextTitleContent = '';
+    
+    self.activeCats = [7]; //4dairy, 7grains
+    self._activeCats = []; //4dairy, 7grains
+    self.catFilter = {};
+    
+    self.allWpCats = [];
+    
+    self.filterByCat_Id = {};
+    self.filterByCat_Id.categories = '';
+    
+    
+    self.allFilter = {};
+    self.allFilter.checked = true;
+     
+    
+    
+    
+    //console.log(self.catFilter);
+    
+    self.postCat = {};
+    self.postCat.active = true;
+    self.postCat.name = 'dairy';
+    self.postCat.id = 4;
+    
     
     //shoul this be app.filter?
     //called for every item in ngrepeat array
@@ -69,19 +94,43 @@
     };
     
   
+    self.filterByCatId = function(item){
+      var show = false;
+      var cats = item.categories;
+      for(var i=0, len=cats.length; i<len; i++){
+        for(var n=0, _len=self.activeCats.length; n<_len; n++){
+          //second for loop for ative
+          if(cats[i] === self.activeCats[n]){
+            show = true;
+            break;
+          }
+        }  
+      }
+      return show;
+    };
     
     
     
     
-    
-    
-    $http.get(baseRest+'/posts?per_page=20').then(function(response){
+    $http.get(baseRest+'/posts?per_page=50').then(function(response){
       if(response.data.length){
         self.posts = response.data;
         //console.log(self.posts[0]);
         //console.log(self.posts.length);
       }
     });
+    
+    $http.get(baseRest+'/categories').then(function(response){
+      if(response.data.length){
+        self.cats = response.data;
+        console.log(self.cats);
+        //console.log(self.posts.length);
+      }
+    });
+    
+    
+    
+    
     
     
     
@@ -116,6 +165,125 @@
     
     
     
+    
+    self.displayCat = function(id){
+      //console.log(this); //no it is CTRL
+      console.log('aa', id); //no it is CTRL
+    };
+    
+    
+    
+    self.toggleAll = function(){
+      //console.log(self.allFilter.checked);
+      var nodes = angular.element(document).find('.cat-filter-checkbox input');
+      var len = nodes.length;
+      if(self.allFilter.checked){
+        for(var i = 0; i<len; i++){
+          var node = nodes[i];
+          console.log(node);
+        }
+      }
+    };
+    
+    /*
+    (function initCatsCheckboxes(){
+      
+      $scope.$watch(function(){
+        var nodes = angular.element(document).find('.cat-filter-checkbox input');
+        var len = nodes.length;
+        return len;
+      }, function(){
+        var nodes = angular.element(document).find('.cat-filter-checkbox input');
+        var len = nodes.length;
+        var checked = self.allFilter.checked;
+        console.log(len, checked);
+        for(var i = 0; i<len; i++){
+          var node = nodes[i];
+          if(checked){
+            angular.element(node).attr('checked', true);
+          }else{
+            angular.element(node).attr('checked', false);
+          }
+        }
+        $scope.$apply();
+      });
+      
+      
+      
+      
+    })();
+    */
+    
+    
+    /*
+    var _old = 0;
+    var _new = 0;
+    var _stop = setInterval(function(){
+      _new = self.allWpCats.length;
+      console.log(_new, _old);
+      if(_new === _old && _new>0){
+        clearInterval(_stop);
+        
+        (function doStuff(){
+          var nodes = angular.element(document).find('.cat-filter-checkbox input');
+          var len = nodes.length;
+          var checked = self.allFilter.checked;
+          console.log(len, checked);
+          for(var i = 0; i<len; i++){
+            var node = nodes[i];
+            if(checked){
+              $(node).attr('checked', true);
+            }else{
+              $(node).attr('checked', false);
+            }
+          }
+        $scope.$apply();
+      })();
+        
+        
+      }
+      _new = _old < _new ? _new : _old;
+      _old = _new;
+      
+    }, 1000);  
+    
+    */
+    
+    
+    /*
+    (function initCatsCheckboxes(){
+      
+      $scope.$watch(function(){
+        var nodes = angular.element(document).find('.cat-filter-checkbox input');
+        var len = nodes.length;
+        return len;
+      }, function (){
+        var nodes = angular.element(document).find('.cat-filter-checkbox input');
+        var len = nodes.length;
+        var checked = self.allFilter.checked;
+        console.log(len, checked);
+        for(var i = 0; i<len; i++){
+          var node = nodes[i];
+          if(checked){
+            angular.element(node).attr('checked', true);
+          }else{
+            angular.element(node).attr('checked', false);
+          }
+        }
+       // $scope.$apply();
+      });
+      
+      
+      
+      
+    })();
+    */
+    
+    
+    
+    self.activeRadio = function(activeCat, $element){
+      console.log(activeCat, $element);
+    };
     
     
     
