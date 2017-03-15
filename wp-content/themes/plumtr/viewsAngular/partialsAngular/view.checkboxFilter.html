@@ -1,0 +1,18 @@
+<span ng-if="CR.checkboxFilter">
+  <br>
+  <label class="checkbox-inline"><strong>Categories multiselect&nbsp;&nbsp;&nbsp;</strong></label>
+      
+
+  <label class="checkbox-inline">
+    <input type="checkbox" ng-model="CR.multiChecksAll" ng-change="CR._toggleAll()" ng-click="CR.checkboxClicked()">All
+  </label>&nbsp;&nbsp;&nbsp;
+      
+      
+  <label ng-repeat="cat in CR.cats track by $index" class="checkbox-inline cat-filter-checkbox">
+    <input type="checkbox" ng-true-value="{{cat.id}}" ng-false-value="false" ng-model="CR.multiChecks[$index]" ng-click="CR.checkboxClicked()" ng-change="CR._catMulti(cat.id, CR.multiChecks[$index])">{{cat.name}}
+  </label>
+</span>
+
+
+
+

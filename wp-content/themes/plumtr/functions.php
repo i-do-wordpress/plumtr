@@ -11,6 +11,7 @@ add_filter('rest_prepare_post', 'plumtrCustomizeRestResponse', 10, 3);
 
 if(!function_exists('plumtrAddScripts')){
   function plumtrAddScripts(){
+    
     //styles
     wp_enqueue_style( 'style', get_stylesheet_uri());
     

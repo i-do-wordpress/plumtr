@@ -25,16 +25,6 @@
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
     
   p.controller('CtrlRoot', CtrlRoot);
   
@@ -42,41 +32,53 @@
   
   function CtrlRoot($http, $scope, $rootScope){
     var self = this;
+    
     self.posts = [];
     self.cats = [];
     
-    self.data = {};
-    self.data.search = '';
-    
-    self.search = '';
-    self.searchObj = {};
     self.searchTextTitleContent = '';
-    
-    self.activeCats = [7]; //4dairy, 7grains
-    self._activeCats = []; //4dairy, 7grains
-    self.catFilter = {};
-    
-    self.allWpCats = [];
     
     self.filterByCat_Id = {};
     self.filterByCat_Id.categories = '';
     
+    self.multiChecks = [];
+    self.multiChecksAll = false;
     
-    self.allFilter = {};
-    self.allFilter.checked = true;
-     
-    
-    
-    
-    //console.log(self.catFilter);
-    
-    self.postCat = {};
-    self.postCat.active = true;
-    self.postCat.name = 'dairy';
-    self.postCat.id = 4;
+    self.radioFilter = true;
+    self.checkboxFilter = false;
     
     
-    //shoul this be app.filter?
+    $http.get(baseRest+'/posts?per_page=50').then(function(response){
+      if(response.data.length){
+        self.posts = response.data;
+        //console.log(self.posts[0]);
+        //console.log(self.posts.length);
+      }
+    });
+    
+    
+    $http.get(baseRest+'/categories').then(function(response){
+      if(response.data.length){
+        self.cats = response.data;
+        self.multiChecksAll = true;
+        self._toggleAll();
+      }
+    });
+    
+    
+    
+    self.toggleFilter = function(filterType){
+      if(filterType === 'radio'){
+        self.radioFilter = true;  
+        self.checkboxFilter = false;  
+      }
+      if(filterType === 'checkbox'){
+        self.radioFilter = false;  
+        self.checkboxFilter = true;  
+      }
+    };
+  
+  
     //called for every item in ngrepeat array
     self.searchTitleContent = function(item){
       //input empty set true for all items show all
@@ -93,14 +95,14 @@
       }
     };
     
-  
-    self.filterByCatId = function(item){
+    
+    self._filterByCatCheckbox = function(item){
       var show = false;
       var cats = item.categories;
       for(var i=0, len=cats.length; i<len; i++){
-        for(var n=0, _len=self.activeCats.length; n<_len; n++){
+        for(var n=0, _len=self.multiChecks.length; n<_len; n++){ 
           //second for loop for ative
-          if(cats[i] === self.activeCats[n]){
+          if(cats[i] === self.multiChecks[n]){
             show = true;
             break;
           }
@@ -108,29 +110,6 @@
       }
       return show;
     };
-    
-    
-    
-    
-    $http.get(baseRest+'/posts?per_page=50').then(function(response){
-      if(response.data.length){
-        self.posts = response.data;
-        //console.log(self.posts[0]);
-        //console.log(self.posts.length);
-      }
-    });
-    
-    $http.get(baseRest+'/categories').then(function(response){
-      if(response.data.length){
-        self.cats = response.data;
-        console.log(self.cats);
-        //console.log(self.posts.length);
-      }
-    });
-    
-    
-    
-    
     
     
     
@@ -151,8 +130,6 @@
       }
     ); //end watch
     
-    
-    
       
     
     self.getPartial = function(partial){
@@ -166,130 +143,90 @@
     
     
     
-    self.displayCat = function(id){
-      //console.log(this); //no it is CTRL
-      console.log('aa', id); //no it is CTRL
-    };
     
+    //dont change checked attr !!! of nodes, change nodes models!
+    //think in models!!!! it updates itself!!!
     
-    
-    self.toggleAll = function(){
-      //console.log(self.allFilter.checked);
-      var nodes = angular.element(document).find('.cat-filter-checkbox input');
-      var len = nodes.length;
-      if(self.allFilter.checked){
-        for(var i = 0; i<len; i++){
-          var node = nodes[i];
-          console.log(node);
+    self._toggleAll = function(){
+      
+      self.multiChecks = [];
+      
+      if(self.multiChecksAll){
+        for(var i = 0, len = self.cats.length; i<len; i++){
+          var id = self.cats[i].id;
+          self.multiChecks.push(id);
+        }
+      }else{
+        for(var _i = 0, _len = self.cats.length; _i<_len; _i++){
+          self.multiChecks.push(false); //otherwise array contains false vals
         }
       }
     };
     
-    /*
-    (function initCatsCheckboxes(){
-      
-      $scope.$watch(function(){
-        var nodes = angular.element(document).find('.cat-filter-checkbox input');
-        var len = nodes.length;
-        return len;
-      }, function(){
-        var nodes = angular.element(document).find('.cat-filter-checkbox input');
-        var len = nodes.length;
-        var checked = self.allFilter.checked;
-        console.log(len, checked);
-        for(var i = 0; i<len; i++){
-          var node = nodes[i];
-          if(checked){
-            angular.element(node).attr('checked', true);
-          }else{
-            angular.element(node).attr('checked', false);
-          }
+
+    
+    
+    
+    
+    
+    //-----------------------------------------------------------
+
+    //no need check for node, or node attr, just watch models!
+    
+    //instead of watch - faster 
+    //
+    //no need for broadcast as these vars are watched/updated by view
+    self.checkboxClicked = function(){
+      var all = self.multiChecks;
+      var len = all.length;
+      for(var i=0; i<len; i++){
+        if(all[i] == false){
+          self.multiChecksAll = false;
+          break;
+        }else{
+          self.multiChecksAll = true;
         }
-        $scope.$apply();
-      });
-      
-      
-      
-      
-    })();
-    */
-    
-    
-    /*
-    var _old = 0;
-    var _new = 0;
-    var _stop = setInterval(function(){
-      _new = self.allWpCats.length;
-      console.log(_new, _old);
-      if(_new === _old && _new>0){
-        clearInterval(_stop);
-        
-        (function doStuff(){
-          var nodes = angular.element(document).find('.cat-filter-checkbox input');
-          var len = nodes.length;
-          var checked = self.allFilter.checked;
-          console.log(len, checked);
-          for(var i = 0; i<len; i++){
-            var node = nodes[i];
-            if(checked){
-              $(node).attr('checked', true);
-            }else{
-              $(node).attr('checked', false);
-            }
-          }
-        $scope.$apply();
-      })();
-        
-        
       }
-      _new = _old < _new ? _new : _old;
-      _old = _new;
-      
-    }, 1000);  
+    };
     
-    */
     
     
     /*
-    (function initCatsCheckboxes(){
-      
-      $scope.$watch(function(){
-        var nodes = angular.element(document).find('.cat-filter-checkbox input');
-        var len = nodes.length;
-        return len;
-      }, function (){
-        var nodes = angular.element(document).find('.cat-filter-checkbox input');
-        var len = nodes.length;
-        var checked = self.allFilter.checked;
-        console.log(len, checked);
-        for(var i = 0; i<len; i++){
-          var node = nodes[i];
-          if(checked){
-            angular.element(node).attr('checked', true);
-          }else{
-            angular.element(node).attr('checked', false);
-          }
+    //broadcast make it faster?
+    //ok but slow?
+    $scope.$watch(function(){
+      var all = self.multiChecks;
+      var len = all.length;
+      var notAll = false;
+      for(var i = 0; i<len; i++){
+        if(all[i] == false){
+          notAll = true;
+          break;
+        }else{
+          notAll = false;
         }
-       // $scope.$apply();
-      });
-      
-      
-      
-      
-    })();
+      }
+      return notAll;
+    }, function(newVal){
+      //console.log(newVal);
+      if(newVal){
+        self.multiChecksAll = false;
+      }else{
+        self.multiChecksAll = true;
+      }
+    });
+    
     */
-    
-    
-    
-    self.activeRadio = function(activeCat, $element){
-      console.log(activeCat, $element);
-    };
+    //----------------------------------------------------------
     
     
     
         
   }//end CR
     
-
+  
+  
+  
+  
     
 })();

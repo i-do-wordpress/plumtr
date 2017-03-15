@@ -1,0 +1,18 @@
+
+<span ng-if="CR.radioFilter">
+  
+  <label class="checkbox-inline"><strong>Categories&nbsp;&nbsp;&nbsp;</strong></label>
+      
+  <label class="radio-inline" ng-class="{'activeRadio':CR.filterByCat_Id.categories===''}">
+    <input type="radio" value="" ng-model="CR.filterByCat_Id.categories" name="radioCats" ng-change="CR.activeRadio(CR.filterByCat_Id.categories)">All
+  </label>
+  
+  <!--no need on click, change pass node, add class, remove class
+    do straight away by ng-class
+  -->
+  <label ng-repeat="cat in CR.cats" class="radio-inline" ng-class="{'activeRadio':CR.filterByCat_Id.categories==cat.id}">
+    <input type="radio" value="{{cat.id}}" ng-model="CR.filterByCat_Id.categories" name="radioCats" ng-change="CR.activeRadio(CR.filterByCat_Id.categories)">{{cat.name}}
+  </label>
+</span>
+
+
